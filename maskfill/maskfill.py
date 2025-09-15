@@ -251,7 +251,9 @@ def maskfill(input_image : Union[str,np.ndarray],
         try:
             import torch
         except ImportError:
-            raise Exception('Pytorch is not installed. Please either install it or set `torch=False`.')
+            print('Pytorch is not installed. Please either install it or set `torch=False`.')
+            print('Falling back to numpy implementation.')
+            torch = False
     if operator == 'median':
         if torch:
             operator_func = torch.nanmedian
