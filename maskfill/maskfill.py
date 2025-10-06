@@ -304,7 +304,7 @@ def maskfill(input_image : Union[str,np.ndarray],
         if verbose:
             print(f'On iteration {counter} | Masked pixels remaining: {np.isnan(output).sum()}')
         if torch:
-            output = process_masked_pixels_torch(input_image=output, pad_width=pad_width,operator_func=operator_func).cpu().numpy()
+            output = process_masked_pixels_torch(input_image=torch.tensor(output), pad_width=pad_width,operator_func=operator_func).cpu().numpy()
         else:
             output = process_masked_pixels(input_image=output, pad_width=pad_width, operator_func=operator_func)
         if writesteps:
@@ -320,7 +320,7 @@ def maskfill(input_image : Union[str,np.ndarray],
         if verbose:
             print('Boxcar smoothing the masked areas.')
         if torch:
-            smoothed_output = process_masked_pixels_torch(input_image=output, pad_width=pad_width, mask=mask,
+            smoothed_output = process_masked_pixels_torch(input_image=torch.tensor(output), pad_width=pad_width, mask=mask,
                                                           operator_func=torch.nanmean).cpu().numpy()
         else:
             smoothed_output = process_masked_pixels(input_image=output, pad_width=pad_width, mask=mask,
